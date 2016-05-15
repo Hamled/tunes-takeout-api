@@ -5,6 +5,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'yelp'
 gem 'rspotify'
+gem 'dotenv'
 
 group :development do
   gem 'rerun'
