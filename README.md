@@ -174,3 +174,32 @@ Response data:
   ]
 }
 ```
+
+
+### Ping
+Test availability of the API.
+
+#### Request
+The `ping` request takes no parameters, and it exists primarily to allow
+applications to programmatically determine if the Tunes & Takeout API is
+currently available (can be reached by the client application).
+
+#### Response
+The response to `ping` is always the same. If the API is available an
+HTTP 200 status code will be returned, otherwise a timeout or other
+status code will be returned.
+
+#### Example
+Request URL:
+
+```
+/v1/ping
+```
+
+Response data:
+
+```
+{
+  "data": "pong"
+}
+```
