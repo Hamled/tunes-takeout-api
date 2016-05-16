@@ -38,6 +38,15 @@ module TunesTakeout
       end
     end
 
+    def self.find_by_serializeable_id(suggestion_id)
+      begin
+        id = Suggestion.from_serializeable_id(suggestion_id)
+        Suggestion.find(id)
+      rescue Mongoid::Errors::DocumentNotFound
+        raise Errors::NotFound
+      end
+    end
+
     def serializeable
       {
         id: serializeable_id,

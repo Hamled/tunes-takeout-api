@@ -46,15 +46,13 @@ module TunesTakeout
 
         get '/:suggestion_id' do
           begin
-            id = Suggestion.from_serializeable_id(params['suggestion_id'])
-            suggestion = Suggestion.find(id)
-            raise unless suggestion
+            suggestion = Suggestion.find_by_serializeable_id(params['suggestion_id'])
 
             json({
               href: canonical_url,
               suggestion: suggestion.serializeable
             })
-          rescue
+          rescue Errors::NotFound
             halt(404)
           end
         end
