@@ -22,7 +22,7 @@ module TunesTakeout
 
       get '/search' do
         query = params['query']
-        limit = params['limit'].to_i || DEFAULT_LIMIT
+        limit = (params['limit'] || DEFAULT_LIMIT).to_i
         seed = params['seed'] || query
 
         suggestions = Suggestion.search(query, limit, seed)
