@@ -3,6 +3,7 @@ ruby '2.3.1'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'puma'
 gem 'yelp'
 gem 'rspotify'
 gem 'dotenv'
