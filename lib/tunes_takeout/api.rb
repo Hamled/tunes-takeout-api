@@ -30,7 +30,7 @@ module TunesTakeout
         limit = (params['limit'] || DEFAULT_LIMIT).to_i
         seed = params['seed'] || query
 
-        suggestions = Suggestion.search(query, limit, seed)
+        suggestions = Suggestion.search(query, limit, seed).map(&:serializeable)
 
         json({
           href: canonical_url({

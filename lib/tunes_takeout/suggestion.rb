@@ -1,5 +1,6 @@
 require 'digest'
 require 'mongoid'
+require 'base64'
 
 module TunesTakeout
   class Suggestion
@@ -34,12 +35,18 @@ module TunesTakeout
       end
     end
 
-    def to_h
+    def serializeable
       {
+        id: serializeable_id,
         food_id: food.yelp_id,
         music_id: music.spotify_id,
         music_type: music.spotify_type
       }
+    end
+
+    # Get a URL-safe, short encoding of the document ID
+    def serializeable_id
+      Base64.urlsafe_encode64([_id].pack('H*'))
     end
   end
 end
