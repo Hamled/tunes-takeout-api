@@ -19,5 +19,19 @@ module TunesTakeout
         []
       end
     end
+
+    def self.favorite_suggestion(user_id, suggestion)
+      begin
+        raise Errors::NotFound unless suggestion
+
+        Favorite.create!(user_id: user_id, suggestion: suggestion)
+      rescue Mongo::Error::OperationFailure => ex
+        if ex.message =~ /^E11000/
+          raise Errors::AlreadyExists
+        else
+          raise ex
+        end
+      end
+    end
   end
 end
