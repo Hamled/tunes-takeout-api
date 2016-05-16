@@ -53,7 +53,7 @@ Request URL:
 
 Response data:
 
-```
+```json
 {
   "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=banana&limit=10&seed=banana",
   "suggestions":[
@@ -120,7 +120,7 @@ Request URL:
 
 Response data:
 
-```
+```json
 {
   "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=avocado",
   "suggestions":[
@@ -152,7 +152,7 @@ Request URL:
 
 Response data:
 
-```
+```json
 {
   "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=12345",
   "suggestions":[
@@ -198,7 +198,7 @@ Request URL:
 
 Response data:
 
-```
+```json
 {
   "data": "pong"
 }
