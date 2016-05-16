@@ -43,6 +43,21 @@ module TunesTakeout
             suggestions: suggestions
           })
         end
+
+        get '/:suggestion_id' do
+          begin
+            id = Suggestion.from_serializeable_id(params['suggestion_id'])
+            suggestion = Suggestion.find(id)
+            raise unless suggestion
+
+            json({
+              href: canonical_url,
+              suggestion: suggestion.serializeable
+            })
+          rescue
+            halt(404)
+          end
+        end
       end
 
       helpers do

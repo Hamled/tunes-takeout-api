@@ -176,6 +176,60 @@ Response data:
 ```
 
 
+### Retrieve suggestion
+Get the details for a specific suggestion, by ID.
+
+#### Request
+This is a GET request which takes no query parameters. The route path
+includes the ID of the suggestion:
+
+```
+/v1/suggestions/:suggestion_id
+```
+
+`:suggestion_id` must be a valid ID returned from this API.
+
+#### Response
+If the suggestion ID is valid and found in the API's database, a JSON
+document will be returned which includes the suggestion and a canonical
+URL for the request itself.
+
+If the suggestion ID is invalid or not found, a response with HTTP
+status code 404 will be returned.
+
+#### Examples
+##### Valid ID
+Request URL:
+
+```
+/v1/suggestions/VzoikPLQUk2WS7xp
+```
+
+Response data:
+
+```json
+{  
+  "href":"https://tunes-takeout-api.herokapp.com/v1/suggestions/VzoikPLQUk2WS7xp",
+  "suggestion":{  
+    "id":"VzoikPLQUk2WS7xp",
+    "food_id":"ohana-seattle-2",
+    "music_id":"0BjkSCLEHlcsogSeDim01W",
+    "music_type":"track"
+  }
+}
+```
+
+##### Invalid ID
+Request URL:
+
+```
+/v1/suggestions/invalid-id-here
+```
+
+Response data:
+Status code 404 (no data is returned).
+
+
 ### Ping
 Test availability of the API.
 
