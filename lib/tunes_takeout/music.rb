@@ -21,14 +21,30 @@ module TunesTakeout
 
     index({ spotify_id: 1, spotify_type: 1 }, { unique: true })
 
+    SPOTIFY_LIMIT_MAX = 50
     TYPES = [RSpotify::Artist, RSpotify::Album,
              RSpotify::Track, RSpotify::Playlist]
 
     def self.search(query, limit)
       TYPES.map do |type|
-        type.search(query, limit: limit).map do |item|
-          find_or_create_by_spotify_item(item)
+        type_limit = limit
+        type_offset = 0
+        results = []
+        while type_limit > 0
+          options = {
+            limit: [type_limit, SPOTIFY_LIMIT_MAX].min,
+            offset: type_offset
+          }
+
+          results.concat(type.search(query, options).map do |item|
+            find_or_create_by_spotify_item(item)
+          end.to_a)
+
+          type_limit -= SPOTIFY_LIMIT_MAX
+          type_offset += SPOTIFY_LIMIT_MAX
         end
+
+        results
       end.flatten.sort_by(&:spotify_id).take(limit)
     end
 

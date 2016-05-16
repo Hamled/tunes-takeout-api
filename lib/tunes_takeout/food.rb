@@ -12,6 +12,7 @@ module TunesTakeout
 
     index({ yelp_id: 1 }, { unique: true })
 
+    YELP_LIMIT_MAX = 20
     DEFAULT_LOCATION = "Seattle"
     DEFAULT_CATEGORY = "food"
 
@@ -25,15 +26,25 @@ module TunesTakeout
     end
 
     def self.search(query, limit)
-      resp = client.search(DEFAULT_LOCATION, {
-        term: query,
-        limit: limit,
-        category: DEFAULT_CATEGORY
-      })
+      offset = 0
+      results = []
+      while limit > 0
+        resp = client.search(DEFAULT_LOCATION, {
+          term: query,
+          limit: [limit, YELP_LIMIT_MAX].min,
+          offset: offset,
+          category: DEFAULT_CATEGORY
+        })
 
-      resp.businesses.map do |business|
-        find_or_create_by_business(business)
-      end.sort_by(&:yelp_id).take(limit)
+        results.concat(resp.businesses.map do |business|
+          find_or_create_by_business(business)
+        end.to_a)
+
+        limit -= YELP_LIMIT_MAX
+        offset += YELP_LIMIT_MAX
+      end
+
+      return results.sort_by(&:yelp_id)
     end
 
     def self.find_or_create_by_business(business)

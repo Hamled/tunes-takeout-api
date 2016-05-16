@@ -14,10 +14,12 @@ module TunesTakeout
 
     index({ food_id: 1, music_id: 1 }, { unique: true })
 
+    API_SEARCH_LIMIT = 100
+
     def self.search(query, limit, seed)
       # Get sorted results from both APIs
-      foods = Food.search(query, limit)
-      music = Music.search(query, limit)
+      foods = Food.search(query, API_SEARCH_LIMIT)
+      music = Music.search(query, API_SEARCH_LIMIT)
 
       # Randomly shuffle them
       random = Random.new(Digest::SHA1.hexdigest(seed).to_i(16))
@@ -26,7 +28,7 @@ module TunesTakeout
       music.shuffle!(random: random)
 
       # Create suggestion pairs
-      num_suggestions = [foods, music].map(&:length).min
+      num_suggestions = [foods, music, 0...limit].map(&:size).min
       (0...num_suggestions).map do |n|
         Suggestion.find_or_create_by({
           food: foods[n],
