@@ -46,7 +46,7 @@ module TunesTakeout
       helpers do
         def canonical_url(params)
           url = URI(request.url)
-          url.query = URI.encode_www_form(params)
+          url.query = params.empty? ? nil : URI.encode_www_form(params)
           return url.to_s
         end
       end
