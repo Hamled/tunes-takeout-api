@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/namespace'
 require 'sinatra/json'
+require 'mongoid'
 require 'uri'
 
 module TunesTakeout
@@ -11,6 +12,10 @@ module TunesTakeout
       require "better_errors"
       use BetterErrors::Middleware
       BetterErrors.application_root = __dir__
+    end
+
+    configure do
+      Mongoid.load! "config/mongoid.yml"
     end
 
     DEFAULT_LIMIT = 10

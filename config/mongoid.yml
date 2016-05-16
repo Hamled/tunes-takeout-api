@@ -1,0 +1,6 @@
+development:
+  clients:
+    default:
+      database: tunes-takeout
+      hosts:
+        - localhost:27017
