@@ -14,12 +14,12 @@ This is version 1 of the Tunes & Takeout API. To ensure consistency if
 the API evolves further, all requests to version 1 are prefixed with
 the path `/v1/`.
 
-### Search
+### Suggestion Search
 Search for food and music suggestions given a particular search term,
 and an optional limit for number of results.
 
 #### Request
-Search requests are GET requests to the `/v1/search` endpoint with the
+Search requests are GET requests to the `/v1/suggestions/search` endpoint with the
 following parameters:
 
 | parameter | data type | description |
@@ -48,14 +48,14 @@ particular search queries may also change.
 Request URL:
 
 ```
-/v1/search?query=banana
+/v1/suggestions/search?query=banana
 ```
 
 Response data:
 
 ```json
 {
-  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=banana&limit=10&seed=banana",
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/suggestions/search?query=banana&limit=10&seed=banana",
   "suggestions":[
     {
       "food_id":"banana-republic-bellevue",
@@ -115,14 +115,14 @@ Response data:
 Request URL:
 
 ```
-/v1/search?query=avocado&limit=3
+/v1/suggestions/search?query=avocado&limit=3
 ```
 
 Response data:
 
 ```json
 {
-  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=avocado",
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/suggestions/search?query=avocado&limit=3&seed=avocado",
   "suggestions":[
     {
       "food_id":"avocados-mexican-restaurant-everett",
@@ -147,14 +147,14 @@ Response data:
 Request URL:
 
 ```
-/v1/search?query=avocado&limit=3&seed=12345
+/v1/suggestions/search?query=avocado&limit=3&seed=12345
 ```
 
 Response data:
 
 ```json
 {
-  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=12345",
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/suggestions/search?query=avocado&limit=3&seed=12345",
   "suggestions":[
     {
       "food_id":"saleys-classic-seattle",

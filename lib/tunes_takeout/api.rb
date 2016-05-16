@@ -26,21 +26,23 @@ module TunesTakeout
         json data: 'pong'
       end
 
-      get '/search' do
-        query = params['query']
-        limit = (params['limit'] || DEFAULT_LIMIT).to_i
-        seed = params['seed'] || query
+      namespace '/suggestions' do
+        get '/search' do
+          query = params['query']
+          limit = (params['limit'] || DEFAULT_LIMIT).to_i
+          seed = params['seed'] || query
 
-        suggestions = Suggestion.search(query, limit, seed).map(&:serializeable)
+          suggestions = Suggestion.search(query, limit, seed).map(&:serializeable)
 
-        json({
-          href: canonical_url({
-            query: query,
-            limit: limit,
-            seed: seed
-          }),
-          suggestions: suggestions
-        })
+          json({
+            href: canonical_url({
+              query: query,
+              limit: limit,
+              seed: seed
+            }),
+            suggestions: suggestions
+          })
+        end
       end
 
       helpers do
