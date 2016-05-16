@@ -264,8 +264,8 @@ Response data:
 
 ```json
 {
-  "href": "http://tunes-takeout-api.herokuapp.com/v1/users/hamled2/favorites",
-  "suggestions": [
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/users/hamled2/favorites",
+  "suggestions":[
     "VzoxXvLQUmT7dPJ5",
     "VzoxXvLQUmT7dPJ6"
   ]
