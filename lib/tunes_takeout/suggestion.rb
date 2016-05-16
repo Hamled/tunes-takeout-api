@@ -39,11 +39,15 @@ module TunesTakeout
 
     def serializeable
       {
-        id: Suggestion.to_serializeable_id(_id),
+        id: serializeable_id,
         food_id: food.yelp_id,
         music_id: music.spotify_id,
         music_type: music.spotify_type
       }
+    end
+
+    def serializeable_id
+      Suggestion.to_serializeable_id(_id)
     end
 
     # Get a URL-safe, short encoding of the document ID
