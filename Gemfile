@@ -7,6 +7,8 @@ gem 'puma'
 gem 'yelp'
 gem 'rspotify'
 gem 'dotenv'
+gem 'mongoid'
+gem 'bson_ext'
 
 group :development do
   gem 'rerun'
