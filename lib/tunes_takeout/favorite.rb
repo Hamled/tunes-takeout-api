@@ -11,5 +11,13 @@ module TunesTakeout
 
     index({ user_id: 1 })
     index({ user_id: 1, suggestion_id: 1 }, { unique: true })
+
+    def self.suggestions_for_user(user_id)
+      begin
+        Favorite.includes(:suggestion).where(user_id: user_id).map(&:suggestion)
+      rescue Mongoid::Errors::DocumentNotFound
+        []
+      end
+    end
   end
 end

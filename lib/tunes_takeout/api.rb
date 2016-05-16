@@ -60,6 +60,17 @@ module TunesTakeout
         end
       end
 
+      namespace '/users/:user_id' do
+        get '/favorites' do
+          suggestions = Favorite.suggestions_for_user(params['user_id'])
+
+          json({
+            href: canonical_url,
+            suggestions: suggestions.map(&:serializeable_id)
+          })
+        end
+      end
+
       helpers do
         def canonical_url(params = nil)
           url = URI(request.url)

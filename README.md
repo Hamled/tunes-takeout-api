@@ -30,7 +30,7 @@ following parameters:
 
 #### Response
 Search results are JSON documents containing a list of suggestion
-hashes, and the canonical URL for the request itself. Each suggestion
+hashes, and a canonical URL for the request itself. Each suggestion
 hash includes the ID for a specific business from the Yelp API as well
 as an ID and type for an item from the Spotify API.
 
@@ -228,6 +228,43 @@ Request URL:
 
 Response data:
 Status code 404 (no data is returned).
+
+
+### Retrieve favorites
+Get the list of favorites for a specific user.
+
+#### Request
+This is a GET request which takes no query parameters. The route path
+includes the ID of the user:
+
+```
+/v1/users/:user_id/favorites
+```
+
+`:user_id` must be a unique ID, preferably the UID from Spotify's OAuth service.
+
+#### Response
+A JSON document will be returned which includes the list of favorited
+suggestions and a canonical URL for the request itself.
+
+#### Example
+Request URL:
+
+```
+/v1/users/hamled2/favorites
+```
+
+Response data:
+
+```json
+{
+  "href": "http://tunes-takeout-api.herokuapp.com/v1/users/hamled2/favorites",
+  "suggestions": [
+    "VzoxXvLQUmT7dPJ5",
+    "VzoxXvLQUmT7dPJ6"
+  ]
+}
+```
 
 
 ### Ping
