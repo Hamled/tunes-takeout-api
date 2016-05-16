@@ -47,6 +47,7 @@ particular search queries may also change.
 ##### Simple query without a limit
 Request URL:
 
+GET:
 ```
 /v1/suggestions/search?query=banana
 ```
@@ -114,6 +115,7 @@ Response data:
 ##### Search query with a limit
 Request URL:
 
+GET:
 ```
 /v1/suggestions/search?query=avocado&limit=3
 ```
@@ -146,6 +148,7 @@ Response data:
 ##### Search query with a random seed
 Request URL:
 
+GET:
 ```
 /v1/suggestions/search?query=avocado&limit=3&seed=12345
 ```
@@ -201,6 +204,7 @@ status code 404 will be returned.
 ##### Valid ID
 Request URL:
 
+GET:
 ```
 /v1/suggestions/VzoikPLQUk2WS7xp
 ```
@@ -222,6 +226,7 @@ Response data:
 ##### Invalid ID
 Request URL:
 
+GET:
 ```
 /v1/suggestions/invalid-id-here
 ```
@@ -250,6 +255,7 @@ suggestions and a canonical URL for the request itself.
 #### Example
 Request URL:
 
+GET:
 ```
 /v1/users/hamled2/favorites
 ```
@@ -305,6 +311,7 @@ be returned depending on the specific error:
 #### Success
 Request URL:
 
+POST:
 ```
 /v1/users/hamled2/favorites
 ```
@@ -323,6 +330,7 @@ Status code 201 (no data is returned).
 #### Invalid Suggestion ID
 Request URL:
 
+POST:
 ```
 /v1/users/hamled2/favorites
 ```
@@ -341,6 +349,7 @@ Status code 404 (no data is returned).
 #### Bad Request
 Request URL:
 
+POST:
 ```
 /v1/users/hamled2/favorites
 ```
@@ -373,6 +382,7 @@ status code will be returned.
 #### Example
 Request URL:
 
+GET:
 ```
 /v1/ping
 ```
