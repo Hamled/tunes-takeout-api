@@ -3,6 +3,7 @@ require 'sinatra/namespace'
 require 'sinatra/json'
 require 'mongoid'
 require 'uri'
+require 'tilt/erb'
 
 module TunesTakeout
   class API < Sinatra::Base
@@ -46,7 +47,7 @@ module TunesTakeout
         def canonical_url(params)
           url = URI(request.url)
           url.query = URI.encode_www_form(params)
-          return url
+          return url.to_s
         end
       end
     end
