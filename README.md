@@ -14,12 +14,12 @@ This is version 1 of the Tunes & Takeout API. To ensure consistency if
 the API evolves further, all requests to version 1 are prefixed with
 the path `/v1/`.
 
-### Search
+### Suggestion Search
 Search for food and music suggestions given a particular search term,
 and an optional limit for number of results.
 
 #### Request
-Search requests are GET requests to the `/v1/search` endpoint with the
+Search requests are GET requests to the `/v1/suggestions/search` endpoint with the
 following parameters:
 
 | parameter | data type | description |
@@ -30,7 +30,7 @@ following parameters:
 
 #### Response
 Search results are JSON documents containing a list of suggestion
-hashes, and the canonical URL for the request itself. Each suggestion
+hashes, and a canonical URL for the request itself. Each suggestion
 hash includes the ID for a specific business from the Yelp API as well
 as an ID and type for an item from the Spotify API.
 
@@ -47,15 +47,16 @@ particular search queries may also change.
 ##### Simple query without a limit
 Request URL:
 
+GET:
 ```
-/v1/search?query=banana
+/v1/suggestions/search?query=banana
 ```
 
 Response data:
 
 ```json
 {
-  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=banana&limit=10&seed=banana",
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/suggestions/search?query=banana&limit=10&seed=banana",
   "suggestions":[
     {
       "food_id":"banana-republic-bellevue",
@@ -114,15 +115,16 @@ Response data:
 ##### Search query with a limit
 Request URL:
 
+GET:
 ```
-/v1/search?query=avocado&limit=3
+/v1/suggestions/search?query=avocado&limit=3
 ```
 
 Response data:
 
 ```json
 {
-  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=avocado",
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/suggestions/search?query=avocado&limit=3&seed=avocado",
   "suggestions":[
     {
       "food_id":"avocados-mexican-restaurant-everett",
@@ -146,15 +148,16 @@ Response data:
 ##### Search query with a random seed
 Request URL:
 
+GET:
 ```
-/v1/search?query=avocado&limit=3&seed=12345
+/v1/suggestions/search?query=avocado&limit=3&seed=12345
 ```
 
 Response data:
 
 ```json
 {
-  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=12345",
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/suggestions/search?query=avocado&limit=3&seed=12345",
   "suggestions":[
     {
       "food_id":"saleys-classic-seattle",
@@ -176,6 +179,193 @@ Response data:
 ```
 
 
+### Retrieve suggestion
+Get the details for a specific suggestion, by ID.
+
+#### Request
+This is a GET request which takes no query parameters. The route path
+includes the ID of the suggestion:
+
+```
+/v1/suggestions/:suggestion_id
+```
+
+`:suggestion_id` must be a valid ID returned from this API.
+
+#### Response
+If the suggestion ID is valid and found in the API's database, a JSON
+document will be returned which includes the suggestion and a canonical
+URL for the request itself.
+
+If the suggestion ID is invalid or not found, a response with HTTP
+status code 404 will be returned.
+
+#### Examples
+##### Valid ID
+Request URL:
+
+GET:
+```
+/v1/suggestions/VzoikPLQUk2WS7xp
+```
+
+Response data:
+
+```json
+{  
+  "href":"https://tunes-takeout-api.herokapp.com/v1/suggestions/VzoikPLQUk2WS7xp",
+  "suggestion":{  
+    "id":"VzoikPLQUk2WS7xp",
+    "food_id":"ohana-seattle-2",
+    "music_id":"0BjkSCLEHlcsogSeDim01W",
+    "music_type":"track"
+  }
+}
+```
+
+##### Invalid ID
+Request URL:
+
+GET:
+```
+/v1/suggestions/invalid-id-here
+```
+
+Response data:
+Status code 404 (no data is returned).
+
+
+### Retrieve favorites
+Get the list of favorites for a specific user.
+
+#### Request
+This is a GET request which takes no query parameters. The route path
+includes the ID of the user:
+
+```
+/v1/users/:user_id/favorites
+```
+
+`:user_id` must be a unique ID, preferably the UID from Spotify's OAuth service.
+
+#### Response
+A JSON document will be returned which includes the list of favorited
+suggestions and a canonical URL for the request itself.
+
+#### Example
+Request URL:
+
+GET:
+```
+/v1/users/hamled2/favorites
+```
+
+Response data:
+
+```json
+{
+  "href": "http://tunes-takeout-api.herokuapp.com/v1/users/hamled2/favorites",
+  "suggestions": [
+    "VzoxXvLQUmT7dPJ5",
+    "VzoxXvLQUmT7dPJ6"
+  ]
+}
+```
+
+
+### Add a favorite
+Mark the given suggestion as a favorite of a specific user.
+
+#### Request
+This is a POST request which takes no query parameters. The route path
+includes the ID of the user:
+
+```
+/v1/users/:user_id/favorites
+```
+
+`:user_id` must be a unique ID, preferably the UID from Spotify's OAuth service.
+
+The POST body must be a JSON document in this form:
+
+```json
+{
+  "suggestion": "suggestion-id"
+}
+```
+
+`suggestion-id` must be a valid ID returned from this API.
+
+#### Response
+If the request is successful an HTTP 201 status code will be returned,
+indicating that the favorite resource was created.
+
+If the request was not successful, the following HTTP status codes may
+be returned depending on the specific error:
+* 404 - No suggestion with id `suggestion-id` was found.
+* 409 - That suggestion is already favorited by that user. 
+* 400 - The request was either not a valid JSON document, or did not
+  include the `suggestion` key in a hash. 
+
+#### Examples
+#### Success
+Request URL:
+
+POST:
+```
+/v1/users/hamled2/favorites
+```
+
+Request body:
+
+```json
+{
+  "suggestion": "VzoxXvLQUmT7dPJ5"
+}
+```
+
+Response data:
+Status code 201 (no data is returned).
+
+#### Invalid Suggestion ID
+Request URL:
+
+POST:
+```
+/v1/users/hamled2/favorites
+```
+
+Request body:
+
+```json
+{
+  "suggestion": "invalid-id-here"
+}
+```
+
+Response data:
+Status code 404 (no data is returned).
+
+#### Bad Request
+Request URL:
+
+POST:
+```
+/v1/users/hamled2/favorites
+```
+
+Request body:
+
+```json
+{
+  "some-other-key": "ignored"
+}
+```
+
+Response data:
+Status code 400 (no data is returned).
+
+
 ### Ping
 Test availability of the API.
 
@@ -192,6 +382,7 @@ status code will be returned.
 #### Example
 Request URL:
 
+GET:
 ```
 /v1/ping
 ```
