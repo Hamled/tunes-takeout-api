@@ -1,14 +1,17 @@
 require 'digest'
+require 'mongoid'
 
 module TunesTakeout
   class Suggestion
-    attr_reader :food_id, :music_id, :music_type
+    include Mongoid::Document
 
-    def initialize(food, music)
-      @food_id = food.id
-      @music_id = music.id
-      @music_type = music.type
-    end
+    belongs_to :food, index: true
+    belongs_to :music, index: true
+
+    validates :food_id, presence: true
+    validates :music_id, presence: true
+
+    index({ food_id: 1, music_id: 1 }, { unique: true })
 
     def self.search(query, limit, seed)
       # Get sorted results from both APIs
@@ -24,20 +27,19 @@ module TunesTakeout
       # Create suggestion pairs
       num_suggestions = [foods, music].map(&:length).min
       (0...num_suggestions).map do |n|
-        Suggestion.new(foods[n], music[n])
+        Suggestion.find_or_create_by({
+          food: foods[n],
+          music: music[n]
+        })
       end
     end
 
     def to_h
       {
-        food_id: food_id,
-        music_id: music_id,
-        music_type: music_type
+        food_id: food.yelp_id,
+        music_id: music.spotify_id,
+        music_type: music.spotify_type
       }
-    end
-
-    def to_json(*args)
-      to_h.to_json(*args)
     end
   end
 end
