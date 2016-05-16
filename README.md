@@ -48,64 +48,64 @@ particular search queries may also change.
 Request URL:
 
 ```
-/v1/search?query=pie
+/v1/search?query=banana
 ```
 
 Response data:
 
 ```
 {
-  "href": "https://tunes-takeout-api.herokuapp.com/v1/search?query=pie&limit=10&seed=pie",
-  "suggestions": [
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=banana&limit=10&seed=banana",
+  "suggestions":[
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "track",
+      "food_id":"banana-republic-bellevue",
+      "music_id":"0vD0IZ6ol5V30tWQRQKEb5",
+      "music_type":"album"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "album",
+      "food_id":"banana-republic-seattle-2",
+      "music_id":"1WGWUsR3u4DpQEaE8zWwcr",
+      "music_type":"artist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "track",
+      "food_id":"cocoa-banana-seattle",
+      "music_id":"13onf2qabc56lH8p8y9CpO",
+      "music_type":"playlist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "artist",
+      "food_id":"banana-republic-seattle-5",
+      "music_id":"1aDpQ3bo57IlYWmsG5sdlp",
+      "music_type":"artist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "artist",
+      "food_id":"el-gaucho-seattle",
+      "music_id":"1J7K2YGisqlwjs9DoJ95td",
+      "music_type":"playlist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "album",
+      "food_id":"metropolitan-grill-seattle",
+      "music_id":"0S2x4SuAe2Yp2N8I7SxQpA",
+      "music_type":"artist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "track",
+      "food_id":"montana-banana-seattle",
+      "music_id":"1Lm9GiMyMtnjhvE4xmK07f",
+      "music_type":"album"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "album",
+      "food_id":"top-banana-seattle",
+      "music_id":"1DU10W5hGXHt5qhY7nHSMw",
+      "music_type":"playlist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "track",
+      "food_id":"deli-cut-subs-seattle",
+      "music_id":"1W5CDcmIkft5yDfv6pJO9o",
+      "music_type":"playlist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "track",
+      "food_id":"bananas-grill-seattle",
+      "music_id":"0L2xg08Uf2oyfTxpOOqxId",
+      "music_type":"playlist"
     }
   ]
 }
@@ -122,22 +122,22 @@ Response data:
 
 ```
 {
-  "href": "https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=avocado",
-  "suggestions": [
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=avocado",
+  "suggestions":[
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "album",
+      "food_id":"avocados-mexican-restaurant-everett",
+      "music_id":"0r2HEDK9STwKSmzmeJiAle",
+      "music_type":"artist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "artist",
+      "food_id":"saleys-classic-seattle",
+      "music_id":"0s2PZZynA0W2Z8iHnRZS48",
+      "music_type":"playlist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "track",
+      "food_id":"homegrown-seattle-4",
+      "music_id":"1Bg7byH7AeQhvwfXs4iRiG",
+      "music_type":"album"
     }
   ]
 }
@@ -154,22 +154,22 @@ Response data:
 
 ```
 {
-  "href": "https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=12345",
-  "suggestions": [
+  "href":"https://tunes-takeout-api.herokuapp.com/v1/search?query=avocado&limit=3&seed=12345",
+  "suggestions":[
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "track",
+      "food_id":"saleys-classic-seattle",
+      "music_id":"1Bg7byH7AeQhvwfXs4iRiG",
+      "music_type":"album"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "album",
+      "food_id":"homegrown-seattle-4",
+      "music_id":"0r2HEDK9STwKSmzmeJiAle",
+      "music_type":"artist"
     },
     {
-      "food_id": "TBD",
-      "music_id": "TBD"
-      "music_type": "artist",
+      "food_id":"avocados-mexican-restaurant-everett",
+      "music_id":"0s2PZZynA0W2Z8iHnRZS48",
+      "music_type":"playlist"
     }
   ]
 }
