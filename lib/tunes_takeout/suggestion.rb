@@ -8,6 +8,7 @@ module TunesTakeout
 
     belongs_to :food, index: true
     belongs_to :music, index: true
+    has_many :favorites
 
     validates :food_id, presence: true
     validates :music_id, presence: true
