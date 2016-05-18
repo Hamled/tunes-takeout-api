@@ -38,6 +38,27 @@ module TunesTakeout
       end
     end
 
+    # Get a list of the top `limit` suggestions,
+    # ranked by number of favorites
+    def self.top(limit)
+      Favorite.collection.aggregate([
+        {
+          "$group" => {
+            _id: "$suggestion_id",
+            favorites: { "$sum" => 1 }
+          }
+        },
+        {
+          "$sort" => { favorites: -1 }
+        },
+        {
+          "$limit" => limit
+        }
+      ]).map { |doc| doc["_id"] }.map do |id|
+        Suggestion.to_serializeable_id(id.to_s)
+      end
+    end
+
     def self.find_by_serializeable_id(suggestion_id)
       begin
         id = Suggestion.from_serializeable_id(suggestion_id)

@@ -44,6 +44,17 @@ module TunesTakeout
           })
         end
 
+        get '/top' do
+          limit = (params['limit'] || DEFAULT_LIMIT).to_i
+
+          suggestions = Suggestion.top(limit)
+
+          json({
+            href: canonical_url({ limit: limit }),
+            suggestions: suggestions
+          })
+        end
+
         get '/:suggestion_id' do
           begin
             suggestion = Suggestion.find_by_serializeable_id(params['suggestion_id'])

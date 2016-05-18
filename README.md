@@ -235,6 +235,83 @@ Response data:
 Status code 404 (no data is returned).
 
 
+### Retrieve top suggestions
+Get the IDs for the top suggestions ranked by number of favorites.
+
+#### Request
+Top requests are GET requests to the `/v1/suggestions/top` endpoint with the
+following parameters:
+
+| parameter | data type | description |
+|-----------|----------:|-------------|
+| `limit`   | integer   | The maximum number of suggestion IDs to return (optional). The default is 20, and valid values are anywhere from 1 through 100. |
+
+#### Response
+A JSON document containing a list of IDs for the top suggestions, ranked
+in order of most number of favorites, along with a canonical URL for the
+request.
+
+#### Examples
+##### Request with default limit
+Request URL:
+
+GET:
+```
+/v1/suggestions/top
+```
+
+Response data:
+
+```json
+{
+  "href":"http://tunes-takeout-api.herokuapp.com/v1/suggestions/top?limit=20",
+  "suggestions":[
+    "Vzu2NPLQUj_xxnST",
+    "Vzu2ffLQUj_xxnVz",
+    "Vzu2m_LQUj_xxnba",
+    "Vzu2NPLQUj_xxnSd",
+    "VzuHJfLQUj_xxnFq",
+    "Vzu2zvLQUj_xxnjc",
+    "Vzu2m_LQUj_xxnbr",
+    "VzuHJfLQUj_xxnFs",
+    "VzuHJfLQUj_xxnFt",
+    "VzuH-vLQUj_xxnOG",
+    "VzuH-vLQUj_xxnOM",
+    "VzuHJfLQUj_xxnF0",
+    "VzuH-vLQUj_xxnN7",
+    "VzuHJfLQUj_xxnFr",
+    "Vzu2m_LQUj_xxnbp",
+    "VzoxXvLQUmT7dPJ5",
+    "Vzu2zvLQUj_xxnjg",
+    "Vzu2zvLQUj_xxnjY",
+    "Vzu2NPLQUj_xxnSL",
+    "VzoxXvLQUmT7dPJ6"
+  ]
+}
+```
+
+##### Request with specified limit
+Request URL:
+
+GET:
+```
+/v1/suggestions/top?limit=3
+```
+
+Response data:
+
+```json
+{
+  "href":"http://tunes-takeout-api.herokuapp.com/v1/suggestions/top?limit=3",
+  "suggestions":[
+    "Vzu2NPLQUj_xxnST",
+    "Vzu2NPLQUj_xxnSd",
+    "Vzu2ffLQUj_xxnVz"
+  ]
+}
+```
+
+
 ### Retrieve favorites
 Get the list of favorites for a specific user.
 
