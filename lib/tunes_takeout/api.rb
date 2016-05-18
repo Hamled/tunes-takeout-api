@@ -19,7 +19,7 @@ module TunesTakeout
       Mongoid.load! "config/mongoid.yml"
     end
 
-    DEFAULT_LIMIT = 10
+    DEFAULT_LIMIT = 20
 
     namespace '/v1' do
       get '/ping' do

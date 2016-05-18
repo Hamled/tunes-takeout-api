@@ -25,7 +25,7 @@ following parameters:
 | parameter | data type | description |
 |-----------|----------:|-------------|
 | `query`   | string    | The term being searched for. This query will be passed along to the Yelp and Spotify APIs without modification. |
-| `limit`   | integer   | The maximum number of suggestion results to return (optional). The default is 10, and valid values are anywhere from 1 through 100. |
+| `limit`   | integer   | The maximum number of suggestion results to return (optional). The default is 20, and valid values are anywhere from 1 through 100. |
 | `seed`    | string    | Seed data for the randomization of suggestion pairings (optional). This **random seed** can be used to guarantee a specific set of suggestion pairs (Yelp & Spotify APIs permitting). The default value is the value of the `query` parameter. |
 
 #### Response
