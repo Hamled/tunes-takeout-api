@@ -59,7 +59,7 @@ module TunesTakeout
       end
     end
 
-    def self.find_by_serializeable_id(suggestion_id)
+    def self.find_by_id(suggestion_id)
       begin
         id = Suggestion.from_serializeable_id(suggestion_id)
         Suggestion.find(id)

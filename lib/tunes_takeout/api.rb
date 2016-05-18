@@ -57,7 +57,7 @@ module TunesTakeout
 
         get '/:suggestion_id' do
           begin
-            suggestion = Suggestion.find_by_serializeable_id(params['suggestion_id'])
+            suggestion = Suggestion.find_by_id(params['suggestion_id'])
 
             json({
               href: canonical_url,
@@ -85,7 +85,7 @@ module TunesTakeout
 
           if data['suggestion']
             begin
-              suggestion = Suggestion.find_by_serializeable_id(data['suggestion'])
+              suggestion = Suggestion.find_by_id(data['suggestion'])
               Favorite.favorite_suggestion(params['user_id'], suggestion)
             rescue Errors::NotFound
               halt(404) # Could not find suggestion
