@@ -14,7 +14,7 @@ This is version 1 of the Tunes & Takeout API. To ensure consistency if
 the API evolves further, all requests to version 1 are prefixed with
 the path `/v1/`.
 
-### Suggestion Search
+### Search for suggestions
 Search for food and music suggestions given a particular search term,
 and an optional limit for number of results.
 
