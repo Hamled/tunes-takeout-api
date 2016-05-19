@@ -2,8 +2,11 @@
 $:.unshift('.')
 
 # Setup dotenv
-require 'dotenv'
-Dotenv.load
+begin
+  require 'dotenv'
+  Dotenv.load
+rescue LoadError
+end
 
 # Run the Sinatra app
 require 'app'
