@@ -323,7 +323,8 @@ includes the ID of the user:
 /v1/users/:user_id/favorites
 ```
 
-`:user_id` must be a unique ID, preferably the UID from Spotify's OAuth service.
+`:user_id` must be a unique ID, preferably the UID from Spotify's
+OAuth service.
 
 #### Response
 A JSON document will be returned which includes the list of favorited
@@ -382,7 +383,7 @@ be returned depending on the specific error:
 * 404 - No suggestion with id `suggestion-id` was found.
 * 409 - That suggestion is already favorited by that user. 
 * 400 - The request was either not a valid JSON document, or did not
-  include the `suggestion` key in a hash. 
+  include the `suggestion` key in a hash.
 
 #### Examples
 #### Success
