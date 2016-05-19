@@ -35,7 +35,7 @@ hash includes the ID for a specific business from the Yelp API as well
 as an ID and type for an item from the Spotify API.
 
 Both IDs are string values, and the type for the music item is one of
-`artist`, `album`, `track`, or `playlist`.
+`artist`, `album`, `track`.
 
 Wherever possible, the Tunes & Takeout API is written to provide
 consistent results for the same queries. This can aid with caching, but
@@ -71,7 +71,7 @@ Response data:
     {
       "food_id":"cocoa-banana-seattle",
       "music_id":"13onf2qabc56lH8p8y9CpO",
-      "music_type":"playlist"
+      "music_type":"artist"
     },
     {
       "food_id":"banana-republic-seattle-5",
@@ -81,7 +81,7 @@ Response data:
     {
       "food_id":"el-gaucho-seattle",
       "music_id":"1J7K2YGisqlwjs9DoJ95td",
-      "music_type":"playlist"
+      "music_type":"track"
     },
     {
       "food_id":"metropolitan-grill-seattle",
@@ -96,17 +96,17 @@ Response data:
     {
       "food_id":"top-banana-seattle",
       "music_id":"1DU10W5hGXHt5qhY7nHSMw",
-      "music_type":"playlist"
+      "music_type":"album"
     },
     {
       "food_id":"deli-cut-subs-seattle",
       "music_id":"1W5CDcmIkft5yDfv6pJO9o",
-      "music_type":"playlist"
+      "music_type":"artist"
     },
     {
       "food_id":"bananas-grill-seattle",
       "music_id":"0L2xg08Uf2oyfTxpOOqxId",
-      "music_type":"playlist"
+      "music_type":"track"
     }
   ]
 }
@@ -134,7 +134,7 @@ Response data:
     {
       "food_id":"saleys-classic-seattle",
       "music_id":"0s2PZZynA0W2Z8iHnRZS48",
-      "music_type":"playlist"
+      "music_type":"track"
     },
     {
       "food_id":"homegrown-seattle-4",
@@ -172,7 +172,7 @@ Response data:
     {
       "food_id":"avocados-mexican-restaurant-everett",
       "music_id":"0s2PZZynA0W2Z8iHnRZS48",
-      "music_type":"playlist"
+      "music_type":"track"
     }
   ]
 }
