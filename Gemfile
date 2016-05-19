@@ -6,11 +6,11 @@ gem 'sinatra-contrib'
 gem 'puma'
 gem 'yelp'
 gem 'rspotify'
-gem 'dotenv'
 gem 'mongoid'
 gem 'bson_ext'
 
 group :development do
+  gem 'dotenv'
   gem 'rerun'
   gem 'better_errors'
   gem 'pry'
