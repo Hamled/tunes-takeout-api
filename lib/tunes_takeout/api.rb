@@ -98,6 +98,27 @@ module TunesTakeout
 
           halt(201) # Successfully created favorite
         end
+
+        delete '/favorites' do
+          begin
+            request.body.rewind
+            data = JSON.parse(request.body.read)
+            halt(400) unless data.class == Hash && data['suggestion']
+
+            suggestion = Suggestion.find_by_id(data['suggestion'])
+            unfaved = Favorite.unfavorite_suggestion(params['user_id'], suggestion)
+
+            if unfaved
+              halt(204) # No content, successfully deleted
+            else
+              halt(500) # Unknown failure to delete favorite
+            end
+          rescue JSON::ParserError
+            halt(400) # Ill-formed JSON document
+          rescue Errors::NotFound
+            halt(404) # Could not find suggestion
+          end
+        end
       end
 
       helpers do

@@ -443,6 +443,100 @@ Response data:
 Status code 400 (no data is returned).
 
 
+### Remove a favorite
+Unmark the given suggestion as a favorite of a specific user.
+
+#### Request
+This is a DELETE request which takes no query parameters. The route path
+includes the ID of the user:
+
+```
+/v1/users/:user_id/favorites
+```
+
+`:user_id` must be a unique ID, preferably the UID from Spotify's
+OAuth service.
+
+The DELETE body must be a JSON document in this form:
+
+```json
+{
+  "suggestion": "suggestion-id"
+}
+```
+
+`suggestion-id` must be a valid ID returned from this API.
+
+#### Response
+If the request is successful an HTTP 204 status code will be returned,
+indicating that the favorite resource was deleted (no content).
+
+If the request was not successful, the following HTTP status codes may
+be returned depending on the specific error:
+* 404 - No suggestion with id `suggestion-id` was found or the user did
+  not have a favorite for that suggestion.
+* 400 - The request was either not a valid JSON document, or did not
+  include the `suggestion` key in a hash.
+
+#### Examples
+#### Success
+Request URL:
+
+DELETE:
+```
+/v1/users/hamled2/favorites
+```
+
+Request body:
+
+```json
+{
+  "suggestion": "VzoxXvLQUmT7dPJ5"
+}
+```
+
+Response data:
+Status code 204 (no data is returned).
+
+#### Invalid Suggestion ID
+Request URL:
+
+DELETE:
+```
+/v1/users/hamled2/favorites
+```
+
+Request body:
+
+```json
+{
+  "suggestion": "invalid-id-here"
+}
+```
+
+Response data:
+Status code 404 (no data is returned).
+
+#### Bad Request
+Request URL:
+
+DELETE:
+```
+/v1/users/hamled2/favorites
+```
+
+Request body:
+
+```json
+{
+  "some-other-key": "ignored"
+}
+```
+
+Response data:
+Status code 400 (no data is returned).
+
+
 ### Ping
 Test availability of the API.
 

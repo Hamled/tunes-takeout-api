@@ -33,5 +33,14 @@ module TunesTakeout
         end
       end
     end
+
+    def self.unfavorite_suggestion(user_id, suggestion)
+      raise Errors::NotFound unless suggestion
+
+      fav = Favorite.find_by(user_id: user_id, suggestion: suggestion)
+      raise Errors::NotFound unless fav
+
+      fav.destroy
+    end
   end
 end
