@@ -80,23 +80,26 @@ module TunesTakeout
         end
 
         post '/favorites' do
-          request.body.rewind
-          data = JSON.parse(request.body.read)
+          begin
+            request.body.rewind
+            data = JSON.parse(request.body.read)
+            halt(400) unless data.class == Hash && data['suggestion']
 
-          if data['suggestion']
-            begin
-              suggestion = Suggestion.find_by_id(data['suggestion'])
-              Favorite.favorite_suggestion(params['user_id'], suggestion)
-            rescue Errors::NotFound
-              halt(404) # Could not find suggestion
-            rescue Errors::AlreadyExists
-              halt(409) # Cannot add the same suggestion twice
+            suggestion = Suggestion.find_by_id(data['suggestion'])
+            faved = Favorite.favorite_suggestion(params['user_id'], suggestion)
+
+            if faved
+              halt(201) # Successfully created favorite
+            else
+              halt(500) # Unknown failure to create favorite
             end
-          else
-              halt(400) # No suggestion to favorite
+          rescue JSON::ParserError
+            halt(400) # Ill-formed JSON document
+          rescue Errors::NotFound
+            halt(404) # Could not find suggestion
+          rescue Errors::AlreadyExists
+            halt(409) # Cannot add the same suggestion twice
           end
-
-          halt(201) # Successfully created favorite
         end
 
         delete '/favorites' do
