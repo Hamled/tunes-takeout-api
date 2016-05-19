@@ -43,6 +43,11 @@ it cannot be guaranteed. Because the Tunes & Takeout API relies upon
 the Yelp and Spotify APIs, when their data changes the results of
 particular search queries may also change.
 
+If the request was not successful, the following HTTP status codes may
+be returned depending on the specific error:
+* 400 - The request parameters were invalid. Either the query was
+  missing, or the limit was not an integer between 1 and 100.
+
 #### Examples
 ##### Simple query without a limit
 Request URL:
@@ -178,6 +183,28 @@ Response data:
 }
 ```
 
+##### Request with missing query
+Request URL:
+
+GET:
+```
+/v1/suggestions/search?limit=3
+```
+
+Response data:
+Status code 400 (no data is returned).
+
+##### Request with invalid limit
+Request URL:
+
+GET:
+```
+/v1/suggestions/search?query=avocado&limit=three
+```
+
+Response data:
+Status code 400 (no data is returned).
+
 
 ### Retrieve suggestion
 Get the details for a specific suggestion, by ID.
@@ -251,6 +278,11 @@ A JSON document containing a list of IDs for the top suggestions, ranked
 in order of most number of favorites, along with a canonical URL for the
 request.
 
+If the request was not successful, the following HTTP status codes may
+be returned depending on the specific error:
+* 400 - The request parameters were invalid. The limit was not an
+integer between 1 and 100.
+
 #### Examples
 ##### Request with default limit
 Request URL:
@@ -310,6 +342,17 @@ Response data:
   ]
 }
 ```
+
+##### Request with invalid limit
+Request URL:
+
+GET:
+```
+/v1/suggestions/top?limit=three
+```
+
+Response data:
+Status code 400 (no data is returned).
 
 
 ### Retrieve favorites

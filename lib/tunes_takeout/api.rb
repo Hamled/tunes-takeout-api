@@ -33,6 +33,8 @@ module TunesTakeout
           limit = (params['limit'] || LIMIT_DEFAULT).to_i
           seed = params['seed'] || query
 
+          halt(400) unless query && limit > 0 && limit <= LIMIT_MAX && seed
+
           suggestions = Suggestion.search(query, limit, seed).map(&:serializeable)
 
           json({
@@ -47,6 +49,7 @@ module TunesTakeout
 
         get '/top' do
           limit = (params['limit'] || LIMIT_DEFAULT).to_i
+          halt(400) unless limit > 0 && limit <= LIMIT_MAX
 
           suggestions = Suggestion.top(limit)
 
