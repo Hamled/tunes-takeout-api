@@ -19,7 +19,8 @@ module TunesTakeout
       Mongoid.load! "config/mongoid.yml"
     end
 
-    DEFAULT_LIMIT = 20
+    LIMIT_DEFAULT = 20
+    LIMIT_MAX = 100
 
     namespace '/v1' do
       get '/ping' do
@@ -29,7 +30,7 @@ module TunesTakeout
       namespace '/suggestions' do
         get '/search' do
           query = params['query']
-          limit = (params['limit'] || DEFAULT_LIMIT).to_i
+          limit = (params['limit'] || LIMIT_DEFAULT).to_i
           seed = params['seed'] || query
 
           suggestions = Suggestion.search(query, limit, seed).map(&:serializeable)
@@ -45,7 +46,7 @@ module TunesTakeout
         end
 
         get '/top' do
-          limit = (params['limit'] || DEFAULT_LIMIT).to_i
+          limit = (params['limit'] || LIMIT_DEFAULT).to_i
 
           suggestions = Suggestion.top(limit)
 
