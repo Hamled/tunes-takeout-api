@@ -85,7 +85,7 @@ module TunesTakeout
 
         post '/favorites' do
           suggestion_id = parse_body('suggestion')
-          halt(400) unless suggestion_id
+          halt(400) unless suggestion_id && !suggestion_id.empty?
           begin
             suggestion = Suggestion.find_by_id(suggestion_id)
             faved = Favorite.favorite_suggestion(params['user_id'], suggestion)
@@ -106,7 +106,7 @@ module TunesTakeout
 
         delete '/favorites' do
           suggestion_id = parse_body('suggestion')
-          halt(400) unless suggestion_id
+          halt(400) unless suggestion_id && !suggestion_id.empty?
           begin
             suggestion = Suggestion.find_by_id(suggestion_id)
             unfaved = Favorite.unfavorite_suggestion(params['user_id'], suggestion)
