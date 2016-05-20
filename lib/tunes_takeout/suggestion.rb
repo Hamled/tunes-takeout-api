@@ -63,7 +63,7 @@ module TunesTakeout
       begin
         id = Suggestion.from_serializeable_id(suggestion_id)
         Suggestion.find(id)
-      rescue Mongoid::Errors::DocumentNotFound
+      rescue Mongoid::Errors::DocumentNotFound, Mongoid::Errors::InvalidFind
         raise Errors::NotFound
       end
     end
@@ -83,12 +83,20 @@ module TunesTakeout
 
     # Get a URL-safe, short encoding of the document ID
     def self.to_serializeable_id(id)
-      Base64.urlsafe_encode64([id].pack('H*'))
+      begin
+        Base64.urlsafe_encode64([id].pack('H*'))
+      rescue ArgumentError
+        return nil
+      end
     end
 
     # Get document ID from URL-safe, short encoding
     def self.from_serializeable_id(id)
-      Base64.urlsafe_decode64(id).unpack('H*').first
+      begin
+        Base64.urlsafe_decode64(id).unpack('H*').first
+      rescue ArgumentError
+        return nil
+      end
     end
   end
 end
