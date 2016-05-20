@@ -84,12 +84,10 @@ module TunesTakeout
         end
 
         post '/favorites' do
+          suggestion_id = parse_body('suggestion')
+          halt(400) unless suggestion_id
           begin
-            request.body.rewind
-            data = JSON.parse(request.body.read)
-            halt(400) unless data.class == Hash && data['suggestion']
-
-            suggestion = Suggestion.find_by_id(data['suggestion'])
+            suggestion = Suggestion.find_by_id(suggestion_id)
             faved = Favorite.favorite_suggestion(params['user_id'], suggestion)
 
             if faved
@@ -107,12 +105,10 @@ module TunesTakeout
         end
 
         delete '/favorites' do
+          suggestion_id = parse_body('suggestion')
+          halt(400) unless suggestion_id
           begin
-            request.body.rewind
-            data = JSON.parse(request.body.read)
-            halt(400) unless data.class == Hash && data['suggestion']
-
-            suggestion = Suggestion.find_by_id(data['suggestion'])
+            suggestion = Suggestion.find_by_id(suggestion_id)
             unfaved = Favorite.unfavorite_suggestion(params['user_id'], suggestion)
 
             if unfaved
@@ -124,6 +120,22 @@ module TunesTakeout
             halt(400) # Ill-formed JSON document
           rescue Errors::NotFound
             halt(404) # Could not find suggestion
+          end
+        end
+
+        helpers do
+          def parse_body(key)
+            begin
+              request.body.rewind
+              data = JSON.parse(request.body.read)
+
+              # We have no requests with bodies that aren't hashes
+              halt(400) unless data.class == Hash
+
+              data[key]
+            rescue JSON::ParserError
+              halt(400) # Ill-formed JSON document
+            end
           end
         end
       end
