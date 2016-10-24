@@ -8,6 +8,7 @@ gem 'yelp'
 gem 'rspotify'
 gem 'mongoid'
 gem 'bson_ext'
+gem 'dalli'
 
 group :development do
   gem 'dotenv'

@@ -21,6 +21,7 @@ GEM
     bson_ext (1.5.1)
     builder (3.2.2)
     coderay (1.1.1)
+    dalli (2.7.6)
     debug_inspector (0.0.2)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
@@ -123,6 +124,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bson_ext
+  dalli
   dotenv
   mongoid
   pry
