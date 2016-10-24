@@ -16,6 +16,9 @@ module TunesTakeout
     DEFAULT_LOCATION = "Seattle"
     DEFAULT_CATEGORY = "food"
 
+    CACHE_TTL = 60*60*24*1 # 1 day
+    CACHE_KEY_PREFIX = "food_yelp"
+
     def self.client
       @client ||= Yelp::Client.new({
         consumer_key: ENV['YELP_CONSUMER_KEY'],
@@ -29,7 +32,8 @@ module TunesTakeout
       offset = 0
       results = []
       while limit > 0
-        resp = client.search(DEFAULT_LOCATION, {
+        resp = yelp_search({
+          location: DEFAULT_LOCATION,
           term: query,
           limit: [limit, YELP_LIMIT_MAX].min,
           offset: offset,
@@ -49,6 +53,16 @@ module TunesTakeout
 
     def self.find_or_create_by_business(business)
       Food.find_or_create_by({ yelp_id: business.id })
+    end
+
+    private
+
+    def self.yelp_search(options)
+      cache_key = options.merge(call: "#{CACHE_KEY_PREFIX}_search")
+      TunesTakeout::API.settings.cache_client.fetch(cache_key, CACHE_TTL) do
+        client.search(options[:location],
+                      options.slice(:term, :limit, :offset, :category))
+      end
     end
   end
 end
