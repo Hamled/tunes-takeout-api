@@ -24,18 +24,22 @@ module TunesTakeout
     SPOTIFY_LIMIT_MAX = 50
     TYPES = [RSpotify::Artist, RSpotify::Album, RSpotify::Track]
 
+    CACHE_TTL = 60*60*24*1 # 1 day
+    CACHE_KEY_PREFIX = "music_spotify"
+
     def self.search(query, limit)
       TYPES.map do |type|
         type_limit = limit
         type_offset = 0
         results = []
         while type_limit > 0
-          options = {
+          resp = spotify_search(type, {
+            query: query,
             limit: [type_limit, SPOTIFY_LIMIT_MAX].min,
             offset: type_offset
-          }
+          })
 
-          results.concat(type.search(query, options).map do |item|
+          results.concat(resp.map do |item|
             find_or_create_by_spotify_item(item)
           end.to_a)
 
@@ -49,9 +53,25 @@ module TunesTakeout
 
     def self.find_or_create_by_spotify_item(item)
       Music.find_or_create_by({
-        spotify_id: item.id,
-        spotify_type: item.type
+        spotify_id: item[:id],
+        spotify_type: item[:type]
       })
+    end
+
+    private
+
+    def self.spotify_search(type, options)
+      cache_key = options.merge(call: "#{CACHE_KEY_PREFIX}_search")
+      TunesTakeout::API.settings.cache_client.fetch(cache_key, CACHE_TTL) do
+        # We have to map the resulting RSpotify items because they contain
+        # singletons which cannot be marshalled for caching
+        type.search(options[:query], options.slice(:limit, :offset)).map do |item|
+          {
+            id: item.id,
+            type: item.type
+          }
+        end
+      end
     end
   end
 end
