@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'sinatra/namespace'
 require 'sinatra/json'
 require 'mongoid'
+require 'dalli'
 require 'uri'
 require 'tilt/erb'
 
@@ -17,6 +18,26 @@ module TunesTakeout
 
     configure do
       Mongoid.load! "config/mongoid.yml"
+
+      # Prefer memcachier-prefixed env vars if they exist (in production)
+      # Otherwise use generic memcache-prefixed env vars
+      config = [:servers, :username, :password].map do |var|
+        value = %w(MEMCACHIER MEMCACHE).map do |prefix|
+          ENV["#{prefix}_#{var.upcase}"]
+        end.compact.first
+
+        [var, value]
+      end.to_h.merge({
+        failover: (ENV['MEMCACHE_FAILOVER'] || "").downcase == 'true',
+        socket_timeout: 1.5,
+        socket_failure_delay: 0.2,
+        compress: true,
+        namespace: "tunes_takeout_api_v1"
+      })
+
+      set(:cache_client, Proc.new do
+        Dalli::Client.new(config[:servers].split(','), config.except(:servers))
+      end)
     end
 
     LIMIT_DEFAULT = 20
